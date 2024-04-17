@@ -1,8 +1,9 @@
-import provider.EnglishGreeting;
-import service.Greeting;
+import provider.MetricBmiCalculator;
+import provider.ImperialBmiCalculator;
+import service.BmiCalculate;
 
 module provider {
     requires service;
-    provides service.Greeting with provider.SwedishGreeting, provider.EnglishGreeting;
+    provides BmiCalculate with ImperialBmiCalculator, MetricBmiCalculator;
 
 }

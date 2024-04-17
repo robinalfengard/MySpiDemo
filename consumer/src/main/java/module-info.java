@@ -1,4 +1,6 @@
+import service.BmiCalculate;
+
 module consumer {
     requires service;
-    uses service.Greeting;
+    uses BmiCalculate;
 }
