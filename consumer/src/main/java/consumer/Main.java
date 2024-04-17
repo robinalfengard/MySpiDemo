@@ -1,24 +1,35 @@
 package consumer;
 import service.BmiCalculate;
-import java.io.IOException;
+import service.NamingAnnotation;
 import java.util.Scanner;
 import java.util.ServiceLoader;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        // Letar efter interfacet Greeting
         ServiceLoader<BmiCalculate> loader = ServiceLoader.load(BmiCalculate.class);
 
+        String metric = null;
+        String imperial = null;
+
+        for (BmiCalculate e : loader) {
+            if (e.getClass().getSimpleName().equals("MetricBmiCalculator")) {
+                metric = e.getClass().getAnnotation(NamingAnnotation.class).name();
+            } else if (e.getClass().getSimpleName().equals("ImperialBmiCalculator")) {
+                imperial = e.getClass().getAnnotation(NamingAnnotation.class).name();
+            }
+        }
+
+
         System.out.println("Welcome to the Bmi Calculator \nPlease enter select if you want to use Metric or Imperial units");
-        System.out.println("1. Imperial \n2. Metric");
+        System.out.println("1. "+ imperial+"\n2. " + metric);
         Scanner sc = new Scanner(System.in);
         String choice = sc.nextLine();
         if(choice.equals("1")){
-            System.out.println("Enter your height in inches");
+            System.out.println("Enter your height in full inches");
             String height = sc.nextLine();
-            System.out.println("Enter your weight in pounds");
+            System.out.println("Enter your weight in full pounds");
             String weight = sc.nextLine();
             for(BmiCalculate g : ServiceLoader.load(BmiCalculate.class)) {
                 if(g.getClass().getSimpleName().equals("ImperialBmiCalculator")) {
@@ -38,27 +49,6 @@ public class Main {
         } else {
             System.out.println("Wrong input");
         }
-
-
-
-
-/*        for(BmiCalculate g : loader) {
-            var annotation =  g.getClass().getDeclaredAnnotation(Adress.class);
-            if(annotation != null){
-                System.out.println(annotation);
-            } else {
-                System.out.println("Annotation was null");
-            }
-            System.out.println(g.getResult("Robin"));
-        }*/
-
-
-        ServiceLoader<BmiCalculate> loader2 = ServiceLoader.load(BmiCalculate.class);
-
-
- /*       for(BmiCalculate g : loader2) {
-            System.out.println(g.getResult("Robin"));
-        }*/
 
     }
 

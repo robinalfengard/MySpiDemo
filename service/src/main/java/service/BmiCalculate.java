@@ -2,5 +2,5 @@ package service;
 
 public interface BmiCalculate {
 
-    public String getResult(double height, double weight);
+    public String getResult(float height, float weight);
 }

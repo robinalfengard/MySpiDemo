@@ -1,15 +1,15 @@
 package provider;
 
 import service.BmiCalculate;
+import service.NamingAnnotation;
 
 
+@NamingAnnotation(name = "Imperial")
 public class ImperialBmiCalculator implements BmiCalculate {
 
-
-
     @Override
-    public String getResult(double height, double weight) {
-        double bmi = weight/(height*height) * 703;
-        return "Your BMI is: " + bmi;
+    public String getResult(float height, float weight) {
+        float bmi = weight/(height*height) * 703;
+        return "Your BMI is: " + String.format("%.2f",bmi);
     }
 }
